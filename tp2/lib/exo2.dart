@@ -14,16 +14,25 @@ class _DisplayImageWidget extends State<DisplayImageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Display image'),
+          title: const Text('Display image'),
         ),
         // body: Center(child: Image.network("https://picsum.photos/1024")));
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Row(
+              Container(
+                color: Colors.black,
+                width: 192.0,
+                height: 192.0,
+                child: Transform(
+                    alignment: Alignment.topRight,
+                    transform: Matrix4.skewY(_currentXSliderValue),
+                    child: Image.asset('images/image.jpg')),
+              ),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text('RotateX:'),
+                  const Text('Rotate:'),
                   Slider(
                     value: _currentXSliderValue,
                     max: 2 * pi,
@@ -33,7 +42,7 @@ class _DisplayImageWidget extends State<DisplayImageWidget> {
                       });
                     },
                   ),
-                  const Text('RotateY:'),
+                  const Text('Scale:'),
                   Slider(
                     value: _currentYSliderValue,
                     max: 2 * pi,
