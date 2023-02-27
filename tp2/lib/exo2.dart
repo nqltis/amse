@@ -8,8 +8,8 @@ class DisplayImageWidget extends StatefulWidget {
 }
 
 class _DisplayImageWidget extends State<DisplayImageWidget> {
-  double _currentXSliderValue = 0;
-  double _currentYSliderValue = 0;
+  double _currentXSliderValue = 0; //Rotation
+  double _currentYSliderValue = 1; //Scale
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +21,14 @@ class _DisplayImageWidget extends State<DisplayImageWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                color: Colors.black,
+                color: Colors.white,
                 width: 192.0,
                 height: 192.0,
                 child: Transform(
-                    alignment: Alignment.topRight,
-                    transform: Matrix4.skewY(_currentXSliderValue),
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()
+                      ..rotateZ(_currentXSliderValue)
+                      ..scale(_currentYSliderValue),
                     child: Image.asset('images/image.jpg')),
               ),
               Column(
