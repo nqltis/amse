@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Tile {
-  String imageURL;
+  Image image;
   Alignment alignment;
 
-  Tile({required this.imageURL, required this.alignment});
+  Tile({required this.image, required this.alignment});
 
   Widget croppedImageTile() {
     return FittedBox(
@@ -15,7 +15,7 @@ class Tile {
             alignment: this.alignment,
             widthFactor: 0.3,
             heightFactor: 0.3,
-            child: Image.network(this.imageURL),
+            child: image,
           ),
         ),
       ),
@@ -24,7 +24,7 @@ class Tile {
 }
 
 Tile tile =
-    Tile(imageURL: 'https://picsum.photos/512', alignment: Alignment(0, 0));
+    Tile(image: Image.asset('images/image.jpg'), alignment: Alignment(0, 0));
 
 class DisplayTileWidget extends StatelessWidget {
   @override
@@ -44,8 +44,7 @@ class DisplayTileWidget extends StatelessWidget {
                 child: this.createTileWidgetFrom(tile))),
         Container(
             height: 200,
-            child:
-                Image.network('https://picsum.photos/512', fit: BoxFit.cover))
+            child: Image.asset('images/image.jpg', fit: BoxFit.cover))
       ])),
     );
   }
