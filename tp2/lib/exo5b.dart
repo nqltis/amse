@@ -32,7 +32,7 @@ class DisplayTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Display a GridView'),
+        title: Text('Display Image in a GridView'),
         centerTitle: true,
       ),
       body: Center(
