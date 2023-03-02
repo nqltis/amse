@@ -26,7 +26,12 @@ class Tile {
 Tile tile =
     Tile(image: Image.asset('images/image.jpg'), alignment: Alignment(1, 0));
 
-class DisplayTileWidget extends StatelessWidget {
+class DisplayGridViewWidget extends StatefulWidget {
+  @override
+  _DisplayGridViewWidget createState() => _DisplayGridViewWidget();
+}
+
+class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
   Image myImage = Image.asset('images/image.jpg');
   @override
   Widget build(BuildContext context) {

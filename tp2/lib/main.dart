@@ -50,7 +50,7 @@ List exos = [
   Exo(
       title: 'Exercice 5c',
       subtitle: 'Display Image in a GridView with a settable number of cells',
-      buildFunc: (context) => exo5c.DisplayTileWidget()),
+      buildFunc: (context) => exo5c.DisplayGridViewWidget()),
 ];
 
 class MenuPage extends StatelessWidget {
