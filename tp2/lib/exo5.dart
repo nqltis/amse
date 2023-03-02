@@ -79,6 +79,21 @@ class DisplayTileWidget extends StatelessWidget {
                     color: Colors.teal[600],
                     child: const Text('Revolution, they...'),
                   ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[700],
+                    child: const Text('Revolution, they...'),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[800],
+                    child: const Text('Revolution, they...'),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[900],
+                    child: const Text('Revolution, they...'),
+                  ),
                 ],
               ))),
     );
