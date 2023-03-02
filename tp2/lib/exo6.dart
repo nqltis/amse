@@ -41,12 +41,7 @@ class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
 
     for (int i = 0; i < size; i++) {
       for (int j = 0; j < size; j++) {
-        list.add(
-          createTileWidgetFrom(Tile(
-              image: myImage,
-              alignment:
-                  Alignment(2 * j / (size - 1) - 1, 2 * i / (size - 1) - 1))),
-        );
+        list.add(tilemodel.PositionedTiles());
       }
     }
 

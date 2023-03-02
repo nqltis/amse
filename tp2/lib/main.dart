@@ -6,7 +6,7 @@ import 'exo4.dart' as exo4;
 import 'exo5a.dart' as exo5a;
 import 'exo5b.dart' as exo5b;
 import 'exo5c.dart' as exo5c;
-import 'exo6.dart' as exo6;
+import 'tilemodel.dart' as exo6;
 
 void main() {
   runApp(MyApp());
@@ -55,7 +55,7 @@ List exos = [
   Exo(
       title: 'Exercice 6',
       subtitle: 'Display Image in a GridView with a settable number of cells',
-      buildFunc: (context) => exo6.DisplayGridViewWidget()),
+      buildFunc: (context) => exo6.PositionedTiles()),
 ];
 
 class MenuPage extends StatelessWidget {
