@@ -47,53 +47,24 @@ class DisplayTileWidget extends StatelessWidget {
                 mainAxisSpacing: 10,
                 crossAxisCount: 3,
                 children: <Widget>[
-                  // createTileWidgetFrom(
-                  //     Tile(image: myImage, alignment: Alignment(1, 0))),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[100],
-                    child: const Text("He'd have you all unravel at the"),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[200],
-                    child: const Text('Heed not the rabble'),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[300],
-                    child: const Text('Sound of screams but the'),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[400],
-                    child: const Text('Who scream'),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[500],
-                    child: const Text('Revolution is coming...'),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[600],
-                    child: const Text('Revolution, they...'),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[700],
-                    child: const Text('Revolution, they...'),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[800],
-                    child: const Text('Revolution, they...'),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[900],
-                    child: const Text('Revolution, they...'),
-                  ),
+                  createTileWidgetFrom(
+                      Tile(image: myImage, alignment: Alignment(-1, -1))),
+                  createTileWidgetFrom(
+                      Tile(image: myImage, alignment: Alignment(0, -1))),
+                  createTileWidgetFrom(
+                      Tile(image: myImage, alignment: Alignment(1, -1))),
+                  createTileWidgetFrom(
+                      Tile(image: myImage, alignment: Alignment(-1, 0))),
+                  createTileWidgetFrom(
+                      Tile(image: myImage, alignment: Alignment(0, 0))),
+                  createTileWidgetFrom(
+                      Tile(image: myImage, alignment: Alignment(1, 0))),
+                  createTileWidgetFrom(
+                      Tile(image: myImage, alignment: Alignment(-1, 1))),
+                  createTileWidgetFrom(
+                      Tile(image: myImage, alignment: Alignment(0, 1))),
+                  createTileWidgetFrom(
+                      Tile(image: myImage, alignment: Alignment(1, 1))),
                 ],
               ))),
     );
