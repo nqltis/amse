@@ -37,55 +37,50 @@ class DisplayTileWidget extends StatelessWidget {
       ),
       body: Center(
           child: Container(
-              child:
-                  // SizedBox(
-                  //     width: 150.0,
-                  //     height: 150.0,
-                  //     child: Container(
-                  //         margin: EdgeInsets.all(20.0),
-                  //         child: this.createTileWidgetFrom(tile))),
-                  GridView.count(
-        primary: false,
-        padding: const EdgeInsets.all(20),
-        shrinkWrap: true,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 2,
-        children: <Widget>[
-          // createTileWidgetFrom(
-          //     Tile(image: myImage, alignment: Alignment(1, 0))),
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: Colors.teal[100],
-            child: const Text("He'd have you all unravel at the"),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: Colors.teal[200],
-            child: const Text('Heed not the rabble'),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: Colors.teal[300],
-            child: const Text('Sound of screams but the'),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: Colors.teal[400],
-            child: const Text('Who scream'),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: Colors.teal[500],
-            child: const Text('Revolution is coming...'),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: Colors.teal[600],
-            child: const Text('Revolution, they...'),
-          ),
-        ],
-      ))),
+              width: 480.0,
+              height: 480.0,
+              child: GridView.count(
+                primary: false,
+                padding: const EdgeInsets.all(20),
+                shrinkWrap: true,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                crossAxisCount: 3,
+                children: <Widget>[
+                  // createTileWidgetFrom(
+                  //     Tile(image: myImage, alignment: Alignment(1, 0))),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[100],
+                    child: const Text("He'd have you all unravel at the"),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[200],
+                    child: const Text('Heed not the rabble'),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[300],
+                    child: const Text('Sound of screams but the'),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[400],
+                    child: const Text('Who scream'),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[500],
+                    child: const Text('Revolution is coming...'),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[600],
+                    child: const Text('Revolution, they...'),
+                  ),
+                ],
+              ))),
     );
   }
 
