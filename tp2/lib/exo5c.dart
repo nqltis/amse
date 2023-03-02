@@ -6,15 +6,15 @@ class Tile {
 
   Tile({required this.image, required this.alignment});
 
-  Widget croppedImageTile() {
+  Widget croppedImageTile(int size) {
     return FittedBox(
       fit: BoxFit.fill,
       child: ClipRect(
         child: Container(
           child: Align(
             alignment: this.alignment,
-            widthFactor: 0.3,
-            heightFactor: 0.3,
+            widthFactor: 1 / size,
+            heightFactor: 1 / size,
             child: image,
           ),
         ),
@@ -33,7 +33,21 @@ class DisplayGridViewWidget extends StatefulWidget {
 
 class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
   Image myImage = Image.asset('images/image.jpg');
-  double _currentSliderValue = 3;
+  double _currentSliderValue = 5;
+
+  List<Widget> getGridViewTiles(int size) {
+    List<Widget> list = [];
+
+    for (int i = 0; i < size * size; i++) {
+      list.add(
+        createTileWidgetFrom(
+            Tile(image: myImage, alignment: Alignment(-1, -1))),
+      );
+    }
+
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,27 +65,8 @@ class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
                 shrinkWrap: true,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                crossAxisCount: 3,
-                children: <Widget>[
-                  createTileWidgetFrom(
-                      Tile(image: myImage, alignment: Alignment(-1, -1))),
-                  createTileWidgetFrom(
-                      Tile(image: myImage, alignment: Alignment(0, -1))),
-                  createTileWidgetFrom(
-                      Tile(image: myImage, alignment: Alignment(1, -1))),
-                  createTileWidgetFrom(
-                      Tile(image: myImage, alignment: Alignment(-1, 0))),
-                  createTileWidgetFrom(
-                      Tile(image: myImage, alignment: Alignment(0, 0))),
-                  createTileWidgetFrom(
-                      Tile(image: myImage, alignment: Alignment(1, 0))),
-                  createTileWidgetFrom(
-                      Tile(image: myImage, alignment: Alignment(-1, 1))),
-                  createTileWidgetFrom(
-                      Tile(image: myImage, alignment: Alignment(0, 1))),
-                  createTileWidgetFrom(
-                      Tile(image: myImage, alignment: Alignment(1, 1))),
-                ],
+                crossAxisCount: _currentSliderValue.toInt(),
+                children: getGridViewTiles(_currentSliderValue.toInt()),
               )),
           Container(
               width: 480,
@@ -91,7 +86,7 @@ class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
 
   Widget createTileWidgetFrom(Tile tile) {
     return InkWell(
-      child: tile.croppedImageTile(),
+      child: tile.croppedImageTile(_currentSliderValue.toInt()),
       onTap: () {
         print("tapped on tile");
       },
