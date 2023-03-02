@@ -6,6 +6,7 @@ import 'exo4.dart' as exo4;
 import 'exo5a.dart' as exo5a;
 import 'exo5b.dart' as exo5b;
 import 'exo5c.dart' as exo5c;
+import 'exo6.dart' as exo6;
 
 void main() {
   runApp(MyApp());
@@ -51,6 +52,10 @@ List exos = [
       title: 'Exercice 5c',
       subtitle: 'Display Image in a GridView with a settable number of cells',
       buildFunc: (context) => exo5c.DisplayGridViewWidget()),
+  Exo(
+      title: 'Exercice 6',
+      subtitle: 'Display Image in a GridView with a settable number of cells',
+      buildFunc: (context) => exo6.DisplayGridViewWidget()),
 ];
 
 class MenuPage extends StatelessWidget {
