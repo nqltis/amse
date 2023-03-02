@@ -33,15 +33,16 @@ class DisplayGridViewWidget extends StatefulWidget {
 
 class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
   Image myImage = Image.asset('images/image.jpg');
+  double _currentSliderValue = 3;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Display Image in a GridView'),
-        centerTitle: true,
-      ),
-      body: Center(
-          child: Container(
+        appBar: AppBar(
+          title: Text('Display Image in a GridView'),
+          centerTitle: true,
+        ),
+        body: Column(children: <Widget>[
+          Container(
               width: 480.0,
               height: 480.0,
               child: GridView.count(
@@ -71,8 +72,21 @@ class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
                   createTileWidgetFrom(
                       Tile(image: myImage, alignment: Alignment(1, 1))),
                 ],
-              ))),
-    );
+              )),
+          Container(
+              width: 480,
+              child: Slider(
+                value: _currentSliderValue,
+                min: 3,
+                max: 8,
+                divisions: 5,
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderValue = value;
+                  });
+                },
+              )),
+        ]));
   }
 
   Widget createTileWidgetFrom(Tile tile) {
