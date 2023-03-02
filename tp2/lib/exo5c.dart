@@ -38,11 +38,15 @@ class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
   List<Widget> getGridViewTiles(int size) {
     List<Widget> list = [];
 
-    for (int i = 0; i < size * size; i++) {
-      list.add(
-        createTileWidgetFrom(
-            Tile(image: myImage, alignment: Alignment(-1, -1))),
-      );
+    for (int i = 0; i < size; i++) {
+      for (int j = 0; j < size; j++) {
+        list.add(
+          createTileWidgetFrom(Tile(
+              image: myImage,
+              alignment:
+                  Alignment(2 * j / (size - 1) - 1, 2 * i / (size - 1) - 1))),
+        );
+      }
     }
 
     return list;
@@ -52,7 +56,7 @@ class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Display Image in a GridView'),
+          title: Text('Display Image in a variable GridView'),
           centerTitle: true,
         ),
         body: Column(children: <Widget>[
@@ -63,8 +67,8 @@ class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
                 primary: false,
                 padding: const EdgeInsets.all(20),
                 shrinkWrap: true,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+                crossAxisSpacing: 3,
+                mainAxisSpacing: 3,
                 crossAxisCount: _currentSliderValue.toInt(),
                 children: getGridViewTiles(_currentSliderValue.toInt()),
               )),
