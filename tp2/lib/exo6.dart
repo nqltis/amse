@@ -47,9 +47,10 @@ class PositionedTiles extends StatefulWidget {
 }
 
 class PositionedTilesState extends State<PositionedTiles> {
-  int size = 3;
+  int size = 4;
 
-  List<Tile> tiles = List<Tile>.generate(9, (index) => Tile.randomColor(index));
+  late List<Tile> tiles =
+      List<Tile>.generate(size * size, (index) => Tile.randomColor(index));
 
   int emptySlotIndex = 0;
 
@@ -69,7 +70,7 @@ class PositionedTilesState extends State<PositionedTiles> {
             shrinkWrap: true,
             crossAxisSpacing: 3,
             mainAxisSpacing: 3,
-            crossAxisCount: 3,
+            crossAxisCount: size,
             //crossAxisCount: _currentSliderValue.toInt(),
             children: [
               ...tiles
