@@ -84,9 +84,6 @@ class PositionedTilesState extends State<PositionedTiles> {
                   .toList(),
             ],
           )),
-      floatingActionButton: FloatingActionButton(
-          onPressed: swapTiles,
-          child: const Icon(Icons.sentiment_very_satisfied)),
     );
   }
 
