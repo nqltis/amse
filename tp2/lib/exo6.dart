@@ -47,6 +47,8 @@ class PositionedTiles extends StatefulWidget {
 }
 
 class PositionedTilesState extends State<PositionedTiles> {
+  int size = 3;
+
   List<Tile> tiles = List<Tile>.generate(9, (index) => Tile.randomColor(index));
 
   int emptySlotIndex = 0;
@@ -73,12 +75,15 @@ class PositionedTilesState extends State<PositionedTiles> {
               ...tiles
                   .map(
                     (element) => InkWell(
-                        child: TileWidget(element),
-                        onTap: () {
+                      child: TileWidget(element),
+                      onTap: () {
+                        if (checkRules(element.index)) {
                           setState(() {
                             swapTiles(element.index);
                           });
-                        }),
+                        }
+                      },
+                    ),
                   )
                   .toList(),
             ],
@@ -88,7 +93,7 @@ class PositionedTilesState extends State<PositionedTiles> {
 
   swapTiles(int index) {
     setState(() {
-      //Swap index arguments of tiles
+      //Swap index attribute of tiles
       tiles[index].index = emptySlotIndex;
       tiles[emptySlotIndex].index = index;
       //Swap Tiles in Tile List
@@ -98,5 +103,21 @@ class PositionedTilesState extends State<PositionedTiles> {
       //Set new empty slot
       emptySlotIndex = index;
     });
+  }
+
+  checkRules(int index) {
+    if (index + size == emptySlotIndex || index - size == emptySlotIndex) {
+      //check tiles above and bellow
+      return true;
+    }
+    if (index == emptySlotIndex + 1 && emptySlotIndex % size != size - 1) {
+      //check right tile
+      return true;
+    }
+    if (index == emptySlotIndex - 1 && emptySlotIndex % size != 0) {
+      //check left tile
+      return true;
+    }
+    return false;
   }
 }
