@@ -9,9 +9,10 @@ math.Random random = math.Random();
 
 class Tile {
   Color color = const Color.fromARGB(255, 0, 0, 255);
+  int index = -1;
 
-  Tile(this.color);
-  Tile.randomColor() {
+  Tile(this.index, this.color);
+  Tile.randomColor(this.index) {
     color = Color.fromARGB(
         255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
   }
@@ -46,11 +47,9 @@ class PositionedTiles extends StatefulWidget {
 }
 
 class PositionedTilesState extends State<PositionedTiles> {
-  List<Widget> tiles =
-      List<Widget>.generate(9, (index) => TileWidget(Tile.randomColor()));
+  List<Tile> tiles = List<Tile>.generate(9, (index) => Tile.randomColor(index));
 
   int emptySlotIndex = 0;
-  int tile2SwapIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +72,11 @@ class PositionedTilesState extends State<PositionedTiles> {
             children: [
               ...tiles
                   .map(
-                    (e) => InkWell(
-                        child: e,
+                    (element) => InkWell(
+                        child: TileWidget(element),
                         onTap: () {
                           setState(() {
-                            swapTiles();
+                            swapTiles(element.index);
                           });
                         }),
                   )
@@ -87,9 +86,17 @@ class PositionedTilesState extends State<PositionedTiles> {
     );
   }
 
-  swapTiles() {
+  swapTiles(int index) {
     setState(() {
-      tiles.insert(tile2SwapIndex, tiles.removeAt(emptySlotIndex));
+      //Swap index arguments of tiles
+      tiles[index].index = emptySlotIndex;
+      tiles[emptySlotIndex].index = index;
+      //Swap Tiles in Tile List
+      Tile shadow = tiles.elementAt(index);
+      tiles[index] = tiles[emptySlotIndex];
+      tiles[emptySlotIndex] = shadow;
+      //Set new empty slot
+      emptySlotIndex = index;
     });
   }
 }
