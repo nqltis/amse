@@ -47,7 +47,10 @@ class PositionedTiles extends StatefulWidget {
 
 class PositionedTilesState extends State<PositionedTiles> {
   List<Widget> tiles =
-      List<Widget>.generate(6, (index) => TileWidget(Tile.randomColor()));
+      List<Widget>.generate(9, (index) => TileWidget(Tile.randomColor()));
+
+  int emptySlotIndex = 0;
+  int tile2SwapIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +70,20 @@ class PositionedTilesState extends State<PositionedTiles> {
             mainAxisSpacing: 3,
             crossAxisCount: 3,
             //crossAxisCount: _currentSliderValue.toInt(),
-            children: [...tiles],
+            children: [
+              ...tiles
+                  .map(
+                    (e) => InkWell(
+                        child: e,
+                        onTap: () {
+                          setState(() {
+                            swapTiles();
+                          });
+                        }),
+                  )
+                  .toList(),
+            ],
           )),
-      //body: Row(children: tiles),
       floatingActionButton: FloatingActionButton(
           onPressed: swapTiles,
           child: const Icon(Icons.sentiment_very_satisfied)),
@@ -78,7 +92,7 @@ class PositionedTilesState extends State<PositionedTiles> {
 
   swapTiles() {
     setState(() {
-      tiles.insert(1, tiles.removeAt(0));
+      tiles.insert(tile2SwapIndex, tiles.removeAt(emptySlotIndex));
     });
   }
 }
