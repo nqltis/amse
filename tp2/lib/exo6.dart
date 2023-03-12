@@ -1,95 +1,84 @@
 import 'package:flutter/material.dart';
-import 'tilemodel.dart' as tilemodel;
+import 'dart:math' as math;
+
+// ==============
+// Models
+// ==============
+
+math.Random random = math.Random();
 
 class Tile {
-  Image image;
-  Alignment alignment;
+  Color color = const Color.fromARGB(255, 0, 0, 255);
 
-  Tile({required this.image, required this.alignment});
-
-  Widget croppedImageTile(int size) {
-    return FittedBox(
-      fit: BoxFit.fill,
-      child: ClipRect(
-        child: Container(
-          child: Align(
-            alignment: this.alignment,
-            widthFactor: 1 / size,
-            heightFactor: 1 / size,
-            child: image,
-          ),
-        ),
-      ),
-    );
+  Tile(this.color);
+  Tile.randomColor() {
+    color = Color.fromARGB(
+        255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
   }
 }
 
-Tile tile =
-    Tile(image: Image.asset('images/image.jpg'), alignment: Alignment(1, 0));
+// ==============
+// Widgets
+// ==============
 
-class DisplayGridViewWidget extends StatefulWidget {
+class TileWidget extends StatelessWidget {
+  final Tile tile;
+
+  TileWidget(this.tile);
+
   @override
-  _DisplayGridViewWidget createState() => _DisplayGridViewWidget();
+  Widget build(BuildContext context) {
+    return coloredBox();
+  }
+
+  Widget coloredBox() {
+    return Container(
+        color: tile.color,
+        child: const Padding(
+          padding: EdgeInsets.all(70.0),
+        ));
+  }
 }
 
-class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
-  Image myImage = Image.asset('images/image.jpg');
-  double _currentSliderValue = 5;
+class PositionedTiles extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => PositionedTilesState();
+}
 
-  List<Widget> getGridViewTiles(int size) {
-    List<Widget> list = [];
-
-    for (int i = 0; i < size; i++) {
-      for (int j = 0; j < size; j++) {
-        list.add(tilemodel.PositionedTiles());
-      }
-    }
-
-    return list;
-  }
+class PositionedTilesState extends State<PositionedTiles> {
+  List<Widget> tiles =
+      List<Widget>.generate(6, (index) => TileWidget(Tile.randomColor()));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Display Image in a variable GridView'),
-          centerTitle: true,
-        ),
-        body: Column(children: <Widget>[
-          Container(
-              width: 480.0,
-              height: 480.0,
-              child: GridView.count(
-                primary: false,
-                padding: const EdgeInsets.all(20),
-                shrinkWrap: true,
-                crossAxisSpacing: 3,
-                mainAxisSpacing: 3,
-                crossAxisCount: _currentSliderValue.toInt(),
-                children: getGridViewTiles(_currentSliderValue.toInt()),
-              )),
-          Container(
-              width: 480,
-              child: Slider(
-                value: _currentSliderValue,
-                min: 3,
-                max: 8,
-                divisions: 5,
-                onChanged: (double value) {
-                  setState(() {
-                    _currentSliderValue = value;
-                  });
-                },
-              )),
-        ]));
+      appBar: AppBar(
+        title: Text('Moving Tiles'),
+        centerTitle: true,
+      ),
+      body: Container(
+          width: 480.0,
+          height: 480.0,
+          child: GridView.count(
+            primary: true,
+            padding: const EdgeInsets.all(20),
+            shrinkWrap: true,
+            crossAxisSpacing: 3,
+            mainAxisSpacing: 3,
+            crossAxisCount: 3,
+            //crossAxisCount: _currentSliderValue.toInt(),
+            children: [...tiles],
+          )),
+      //body: Row(children: tiles),
+      floatingActionButton: FloatingActionButton(
+          onPressed: swapTiles,
+          child: const Icon(Icons.sentiment_very_satisfied)),
+    );
   }
 
-  Widget createTileWidgetFrom(Tile tile) {
-    return InkWell(
-      child: tile.croppedImageTile(_currentSliderValue.toInt()),
-      onTap: () {
-        print("tapped on tile");
-      },
-    );
+  swapTiles() {
+    setState(() {
+      tiles.insert(1, tiles.removeAt(0));
+    });
   }
 }

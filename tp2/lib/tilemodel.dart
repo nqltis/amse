@@ -40,8 +40,6 @@ class TileWidget extends StatelessWidget {
   }
 }
 
-void main() => runApp(new MaterialApp(home: PositionedTiles()));
-
 class PositionedTiles extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => PositionedTilesState();
@@ -49,7 +47,7 @@ class PositionedTiles extends StatefulWidget {
 
 class PositionedTilesState extends State<PositionedTiles> {
   List<Widget> tiles =
-      List<Widget>.generate(4, (index) => TileWidget(Tile.randomColor()));
+      List<Widget>.generate(6, (index) => TileWidget(Tile.randomColor()));
 
   @override
   Widget build(BuildContext context) {
@@ -62,17 +60,19 @@ class PositionedTilesState extends State<PositionedTiles> {
           width: 480.0,
           height: 480.0,
           child: GridView.count(
-            primary: false,
+            primary: true,
             padding: const EdgeInsets.all(20),
             shrinkWrap: true,
             crossAxisSpacing: 3,
             mainAxisSpacing: 3,
             crossAxisCount: 3,
             //crossAxisCount: _currentSliderValue.toInt(),
-            children: tiles,
+            children: [...tiles],
           )),
+      //body: Row(children: tiles),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.sentiment_very_satisfied), onPressed: swapTiles),
+          onPressed: swapTiles,
+          child: const Icon(Icons.sentiment_very_satisfied)),
     );
   }
 

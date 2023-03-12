@@ -6,7 +6,7 @@ import 'exo4.dart' as exo4;
 import 'exo5a.dart' as exo5a;
 import 'exo5b.dart' as exo5b;
 import 'exo5c.dart' as exo5c;
-import 'tilemodel.dart' as exo6;
+import 'exo6.dart' as exo6;
 
 void main() {
   runApp(MyApp());
