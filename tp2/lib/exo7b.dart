@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -11,12 +13,16 @@ class Tile {
   Image image;
   int index;
   int size;
-  late Alignment alignment = Alignment(
-    (2 * (index % size) / (size - 1) - 1).toDouble(),
-    (2 * (index ~/ size) / (size - 1) - 1).toDouble(),
-  );
+  Alignment alignment;
 
-  Tile(this.index, this.image, this.size);
+  Tile(this.index, this.image, this.size, this.alignment);
+
+  static Alignment genAlignment(int index, int size) {
+    return Alignment(
+      (2 * (index % size) / (size - 1) - 1).toDouble(),
+      (2 * (index ~/ size) / (size - 1) - 1).toDouble(),
+    );
+  }
 
   Widget croppedImageTile() {
     return FittedBox(
@@ -31,6 +37,14 @@ class Tile {
       ),
     );
   }
+
+  Widget coloredBox() {
+    return Container(
+        color: Colors.white,
+        child: const Padding(
+          padding: EdgeInsets.all(70.0),
+        ));
+  }
 }
 
 // ==============
@@ -40,16 +54,21 @@ class Tile {
 class TileWidget extends StatelessWidget {
   final Tile tile;
 
-  TileWidget(this.tile);
+  const TileWidget(this.tile, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return tile.croppedImageTile();
+    if (tile.alignment == const Alignment(-1, -1)) {
+      return tile.coloredBox();
+    } else {
+      return tile.croppedImageTile();
+    }
   }
 }
 
 class PositionedTiles extends StatefulWidget {
   const PositionedTiles({super.key});
+
   @override
   State<StatefulWidget> createState() => PositionedTilesState();
 }
@@ -57,16 +76,20 @@ class PositionedTiles extends StatefulWidget {
 class PositionedTilesState extends State<PositionedTiles> {
   late int size;
   Image image = Image.asset('images/image.jpg');
+  bool shuffled = false;
 
-  late List<Tile> tiles =
-      List<Tile>.generate(size * size, (index) => Tile(index, image, size));
+  late List<Tile> tiles = List<Tile>.generate(size * size,
+      (index) => Tile(index, image, size, Tile.genAlignment(index, size)));
 
   int emptySlotIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    print("Building widget");
     size = ModalRoute.of(context)!.settings.arguments as int;
+    if (!shuffled) {
+      shuffle();
+      shuffled = true;
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Moving Tiles'),
@@ -82,7 +105,6 @@ class PositionedTilesState extends State<PositionedTiles> {
             crossAxisSpacing: 3,
             mainAxisSpacing: 3,
             crossAxisCount: size,
-            //crossAxisCount: _currentSliderValue.toInt(),
             children: [
               ...tiles
                   .map(
@@ -118,8 +140,12 @@ class PositionedTilesState extends State<PositionedTiles> {
   }
 
   checkRules(int index) {
-    if (index + size == emptySlotIndex || index - size == emptySlotIndex) {
-      //check tiles above and bellow
+    if (index + size == emptySlotIndex && index > 0) {
+      //check tile bellow
+      return true;
+    }
+    if (index - size == emptySlotIndex && index < size * size) {
+      //check tile above
       return true;
     }
     if (index == emptySlotIndex + 1 && emptySlotIndex % size != size - 1) {
@@ -131,5 +157,33 @@ class PositionedTilesState extends State<PositionedTiles> {
       return true;
     }
     return false;
+  }
+
+  shuffle() {
+    for (int i = 0; i < size * 5; i++) {
+      int direction = random.nextInt(4);
+      int newIndex;
+      switch (direction) {
+        case 0:
+          newIndex = tiles[emptySlotIndex].index - 1;
+          break;
+        case 1:
+          newIndex = tiles[emptySlotIndex].index + 1;
+          break;
+        case 2:
+          newIndex = tiles[emptySlotIndex].index - size;
+          break;
+        case 3:
+          newIndex = tiles[emptySlotIndex].index + size;
+          break;
+        default:
+          newIndex = 0;
+          break;
+      }
+      print("going to index $newIndex");
+      if (checkRules(newIndex)) {
+        swapTiles(newIndex);
+      }
+    }
   }
 }
