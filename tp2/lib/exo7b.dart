@@ -13,9 +13,12 @@ class Tile {
   Image image;
   int index;
   int size;
+  late int initialIndex;
   Alignment alignment;
 
-  Tile(this.index, this.image, this.size, this.alignment);
+  Tile(this.index, this.image, this.size, this.alignment) {
+    initialIndex = index;
+  }
 
   static Alignment genAlignment(int index, int size) {
     return Alignment(
@@ -115,6 +118,26 @@ class PositionedTilesState extends State<PositionedTiles> {
                           setState(() {
                             swapTiles(element.index);
                           });
+                          if (checkWin()) {
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Vous avez gagné !'),
+                                content: const Text(
+                                    'Vous avez complété ce taquin ! Bravo l\'ami !'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      shuffled = false;
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Recommencer'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
                         }
                       },
                     ),
@@ -140,7 +163,7 @@ class PositionedTilesState extends State<PositionedTiles> {
   }
 
   checkRules(int index) {
-    if (index + size == emptySlotIndex && index > 0) {
+    if (index + size == emptySlotIndex && index >= 0) {
       //check tile bellow
       return true;
     }
@@ -160,7 +183,7 @@ class PositionedTilesState extends State<PositionedTiles> {
   }
 
   shuffle() {
-    for (int i = 0; i < size * 5; i++) {
+    for (int i = 0; i < size * 10; i++) {
       int direction = random.nextInt(4);
       int newIndex;
       switch (direction) {
@@ -185,5 +208,14 @@ class PositionedTilesState extends State<PositionedTiles> {
         swapTiles(newIndex);
       }
     }
+  }
+
+  checkWin() {
+    for (int i = 0; i < size * size; i++) {
+      if (tiles[i].initialIndex != i) {
+        return false;
+      }
+    }
+    return true;
   }
 }
