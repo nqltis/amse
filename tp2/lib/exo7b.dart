@@ -42,12 +42,13 @@ class TileWidget extends StatelessWidget {
 }
 
 class PositionedTiles extends StatefulWidget {
+  const PositionedTiles({super.key});
   @override
   State<StatefulWidget> createState() => PositionedTilesState();
 }
 
 class PositionedTilesState extends State<PositionedTiles> {
-  int size = 4;
+  late int size;
 
   late List<Tile> tiles =
       List<Tile>.generate(size * size, (index) => Tile.randomColor(index));
@@ -56,6 +57,7 @@ class PositionedTilesState extends State<PositionedTiles> {
 
   @override
   Widget build(BuildContext context) {
+    size = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
       appBar: AppBar(
         title: Text('Moving Tiles'),

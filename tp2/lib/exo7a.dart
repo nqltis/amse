@@ -89,10 +89,13 @@ class _DisplayGridViewWidget extends State<DisplayGridViewWidget> {
           FilledButton(
               onPressed: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => game.PositionedTiles()),
-                );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const game.PositionedTiles(),
+                      settings: RouteSettings(
+                        arguments: _currentSliderValue,
+                      ),
+                    ));
               },
               child: const Text('Start')),
         ]));
