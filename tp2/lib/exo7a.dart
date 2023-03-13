@@ -13,7 +13,7 @@ class Tile {
       child: ClipRect(
         child: Container(
           child: Align(
-            alignment: this.alignment,
+            alignment: alignment,
             widthFactor: 1 / size,
             heightFactor: 1 / size,
             child: image,

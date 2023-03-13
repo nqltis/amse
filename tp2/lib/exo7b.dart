@@ -8,13 +8,28 @@ import 'dart:math' as math;
 math.Random random = math.Random();
 
 class Tile {
-  Color color = const Color.fromARGB(255, 0, 0, 255);
-  int index = -1;
+  Image image;
+  int index;
+  int size;
+  late Alignment alignment = Alignment(
+    (2 * (index % size) / (size - 1) - 1).toDouble(),
+    (2 * (index ~/ size) / (size - 1) - 1).toDouble(),
+  );
 
-  Tile(this.index, this.color);
-  Tile.randomColor(this.index) {
-    color = Color.fromARGB(
-        255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+  Tile(this.index, this.image, this.size);
+
+  Widget croppedImageTile() {
+    return FittedBox(
+      fit: BoxFit.fill,
+      child: ClipRect(
+        child: Align(
+          alignment: alignment,
+          widthFactor: 1 / size,
+          heightFactor: 1 / size,
+          child: image,
+        ),
+      ),
+    );
   }
 }
 
@@ -29,15 +44,7 @@ class TileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return coloredBox();
-  }
-
-  Widget coloredBox() {
-    return Container(
-        color: tile.color,
-        child: const Padding(
-          padding: EdgeInsets.all(70.0),
-        ));
+    return tile.croppedImageTile();
   }
 }
 
@@ -49,18 +56,20 @@ class PositionedTiles extends StatefulWidget {
 
 class PositionedTilesState extends State<PositionedTiles> {
   late int size;
+  Image image = Image.asset('images/image.jpg');
 
   late List<Tile> tiles =
-      List<Tile>.generate(size * size, (index) => Tile.randomColor(index));
+      List<Tile>.generate(size * size, (index) => Tile(index, image, size));
 
   int emptySlotIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    print("Building widget");
     size = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Moving Tiles'),
+        title: const Text('Moving Tiles'),
         centerTitle: true,
       ),
       body: Container(
